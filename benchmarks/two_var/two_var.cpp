@@ -15,13 +15,11 @@
  */
 #include <tuning_playground.hpp>
 
-#include <chrono>
 #include <cmath> // cbrt
 #include <cstdlib>
 #include <iostream>
 #include <random>
 #include <tuple>
-#include <unistd.h>
 auto make_value_candidates() {
   std::vector<int64_t> candidates{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
   int64_t *bad_candidate_impl =
@@ -107,7 +105,7 @@ int main(int argc, char *argv[]) {
             context, 2, answer_vector.data());
         auto penalty = std::abs(answer_vector[0].value.int_value - x) +
                        std::abs(answer_vector[1].value.int_value - y);
-        usleep(10 * penalty);
+        active_usleep(10 * penalty);
         Kokkos::Tools::Experimental::end_context(context);
       });
 }

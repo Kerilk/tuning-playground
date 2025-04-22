@@ -3,6 +3,8 @@
 
 #include<Kokkos_Core.hpp>
 #include<unordered_map>
+#include <time.h>
+#include <unistd.h>
 
 namespace Impl {
 
@@ -64,6 +66,18 @@ void fastest_of_helper(int index, Head head, Cons... cons){
     return head();
   }
   return fastest_of_helper(index-1, cons...);
+}
+
+static void active_usleep(useconds_t usec) {
+        struct timespec time;
+        clock_gettime(CLOCK_REALTIME, &time);
+        int64_t start_date = (int64_t)time.tv_sec * 1000000000 + time.tv_nsec;
+        int64_t target = start_date + usec * 1000;
+        int64_t stop_date = start_date;
+        while (stop_date < target) {
+                clock_gettime(CLOCK_REALTIME, &time);
+                stop_date = (int64_t)time.tv_sec * 1000000000 + time.tv_nsec;
+        }
 }
 
 static std::unordered_map<std::string, size_t> ids_for_kernels;

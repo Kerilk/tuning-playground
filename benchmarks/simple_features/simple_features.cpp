@@ -24,7 +24,6 @@
 #include <iostream>
 #include <random>
 #include <tuple>
-#include <unistd.h>
 auto make_cuteness_candidates_range() {
   return Kokkos::Tools::Experimental::make_candidate_range((int64_t)0, 12, 0, false, true);
 }
@@ -123,7 +122,7 @@ int main(int argc, char *argv[]) {
                         : 1);
         // std::cout << "Iter: "<<x<<": "<<name.c_str() << ":
         // "<<answer_vector[1].value.string_value <<": "<<penalty<<std::endl;
-        usleep(10 * penalty);
+        active_usleep(10 * penalty);
         Kokkos::Tools::Experimental::end_context(context);
       });
 }
