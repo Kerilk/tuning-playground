@@ -124,7 +124,7 @@ void fastest_of(const std::string& label, Implementations... implementations){
     auto var_id = tuner_iter->second;
     auto input_id = create_fastest_implementation_id();
     VariableValue picked_implementation = make_variable_value(var_id,int64_t(0));
-    VariableValue which_kernel = make_variable_value(var_id,label.c_str());
+    VariableValue which_kernel = make_variable_value(input_id,label.c_str());
     auto context_id = get_new_context_id();
     begin_context(context_id);
     set_input_values(context_id, 1, &which_kernel);
